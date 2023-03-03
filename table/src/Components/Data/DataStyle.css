@@ -1,0 +1,10 @@
+.table-content{
+    width: 100%;
+ }
+ .row > td{
+    height: 87px;
+    padding: 10px 15px 15px 11px;
+    text-align: center;
+    border: 1px solid #E3E6EC;
+ }
+
