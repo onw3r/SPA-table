@@ -35,8 +35,25 @@ input{
 .col-title{
    height: 54px;
 }
+.text{
+   position: relative;
+}
+.text::after{
+   content: "";
+   width: 8px;
+   height: 8px;
+   border:  solid #fff;
+   border-width: 1px 0 0 1px;
+   transform: translate(-50%, -50%) rotate(-135deg);
+   position: absolute;
+   top: 4px;
+   right:-40px;
+
+  
+}
 .col-1{
    width: 110px;
+   padding-right: 30px;
 }
 .col-2{
    width: 529px;
@@ -49,6 +66,7 @@ input{
 }
 .row > td{
    height: 87px;
+   padding: 10px 15px 15px 11px;
    text-align: center;
    border: 1px solid #E3E6EC;
 }
