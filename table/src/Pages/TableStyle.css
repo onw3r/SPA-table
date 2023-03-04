@@ -18,8 +18,9 @@
 }
 .text{
    position: relative;
+   color: #fff;
 }
-.text::after{
+.active::after{
    content: "";
    width: 8px;
    height: 8px;
@@ -28,6 +29,17 @@
    transform: translate(-50%, -50%) rotate(-135deg);
    position: absolute;
    top: 4px;
+   right:-40px;
+}
+.inactive::after{
+   content: "";
+   width: 8px;
+   height: 8px;
+   border:  solid #fff;
+   border-width: 1px 0 0 1px;
+   transform: translate(-50%, -50%) rotate(45deg);
+   position: absolute;
+   top: 10px;
    right:-40px;
 }
 .col-1{
@@ -40,6 +52,10 @@
 .col-3{
    width: 432px;
 }
+.text:hover{
+   cursor: pointer;
+}
+
 .row > td{
    height: 87px;
    padding: 10px 15px 15px 11px;

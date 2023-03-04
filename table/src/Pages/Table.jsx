@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Data from '../Components/Data/Data';
 import InputSearch from '../Components/InputSearch/InputSearch';
 import Pagintaion from '../Components/Pagination/Pagintaion';
@@ -7,12 +7,12 @@ import './TableStyle.css'
 
 function Table(){
     const [data, setData] = useState([]);
-    const [value, setValue] = useState('');
-    const [currentPage, setCurrentPage] = useState(1);
-    const [dataPerPage, setDataPerPage] = useState(10);
-
-    const lastIndex = currentPage * dataPerPage;
-    const firstIndex = lastIndex - dataPerPage;
+    const [value, setValue] = useState('');   //значение в инпуте поиска
+    const [currentPage, setCurrentPage] = useState(1);   //текущая страница
+    const [dataPerPage, setDataPerPage] = useState(10);   //сколько отображать записей на  странице
+    const [sorted, setSorted] = useState({}); // параметры для сортировки
+    const lastIndex = currentPage * dataPerPage;  // определение первого элемента страницы
+    const firstIndex = lastIndex - dataPerPage;   // определение последнего элемента страницы
 
     const jsonFormat = function (response) {
         return response.json()
@@ -38,30 +38,50 @@ function Table(){
         }else if(el.body.toLowerCase().includes(value.toLowerCase())){
             return el.body
         }
-
     })
 
-    const currentData = search.slice(firstIndex, lastIndex);
 
+    const currentData = search.slice(firstIndex, lastIndex); //данные после поиска
+    useMemo(()=>{
+        if(sorted !== null){
+            data.sort((a,b)=>{
+               if(a[sorted.key] < b[sorted.key]){
+                return sorted.direction === 'ascending' ? -1 : 1;
+               }
+               if(a[sorted.key] > b[sorted.key]){
+                return sorted.direction === 'ascending' ? 1 : -1;
+               }
+               return 0
+            })
+        }
+    },[data, sorted])
 
-    const paginate = pageNumber => setCurrentPage(pageNumber)
+    const requestSort = (key) =>{       //функция определяеющая параметры сортировки
+        let direction = 'ascending'
+        if(sorted.key ===key && sorted.direction ==='ascending'){
+            direction = 'descending'
+        }
+        setSorted({key, direction})
+    }
+    console.log(sorted.direction)
     return (
 
         <div className='wrapper-content'>
             <InputSearch
                 setValue = {setValue}
+                setCurrentPage ={setCurrentPage}
             />
             <table className='table'>
                 <thead className='table-head'>
                     <tr className='col-title'>
-                        <th className='col-1'>
-                            <span className='text'>ID</span>
+                        <th className='col-1' onClick={()=> requestSort('id')}>
+                            <span className={`text ${sorted.direction == 'ascending' || sorted.key !== 'id' ? 'active' : 'inactive'}`}>ID</span>
                         </th>
-                        <th className='col-2'>
-                            <span className='text'>Заголовок</span>
+                        <th className='col-2' onClick={()=> requestSort('title')}>
+                            <span className={`text ${sorted.direction == 'ascending' || sorted.key !== 'title' ? 'active' : 'inactive'}`}>Заголовок</span>
                         </th>
-                        <th className='col-3'>
-                            <span className='text'>Описание</span>
+                        <th className='col-3' onClick={()=> requestSort('body')}>
+                            <span className={`text ${sorted.direction == 'ascending' || sorted.key !== 'body' ? 'active' : 'inactive'}`}>Описание</span>
                         </th>
                     </tr>
                 </thead>
@@ -74,7 +94,6 @@ function Table(){
             <Pagintaion
                 dataPerPage = {dataPerPage}
                 totalData = {data.length}
-                paginate = {paginate}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
                 value = {value}
