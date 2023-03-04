@@ -8,7 +8,7 @@ function Pagintaion(props) {
     let totalNumbers = props.totalData / props.dataPerPage         //общее количество страниц до поиска
     const paginate = (pageNumber) => props.setCurrentPage(pageNumber)      //установка выбранной страницы
 
-    for(let i = 1; i <= (props.value ? Math.ceil(totalSearchNumbers) : Math.ceil(totalNumbers)); i++){     //подсчёт общего количества страниц взависимости до поиска/после поиска
+    for (let i = 1; i <= (props.value ? Math.ceil(totalSearchNumbers) : Math.ceil(totalNumbers)); i++) {     //подсчёт общего количества страниц взависимости до поиска/после поиска
         pageNumbers.push(i)
     }
     return (
