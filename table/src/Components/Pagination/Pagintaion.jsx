@@ -3,8 +3,11 @@ import './PaginationStyle.css'
 function Pagintaion(props) {
 
     const pageNumbers = [];
-
-    for(let i = 1; i <= Math.ceil(props.totalData / props.dataPerPage); i++){
+    let totalSeatchNumbers = props.searchData / props.dataPerPage
+    let totalNumbers = props.totalData / props.dataPerPage
+    console.log(props.searchData)
+    console.log(totalSeatchNumbers)
+    for(let i = 1; i <= (props.value ? Math.ceil(totalSeatchNumbers) : Math.ceil(totalNumbers)); i++){
         pageNumbers.push(i)
     }
     return (
@@ -18,7 +21,7 @@ function Pagintaion(props) {
                 ))
                 }
             </ul>
-            <button className='page-toggle' onClick={()=>props.setCurrentPage(props.currentPage < props.totalData / props.dataPerPage ? props.currentPage + 1 : props.currentPage)}>Далее</button>
+            <button className='page-toggle' onClick={()=>props.setCurrentPage(props.currentPage < totalNumbers ? props.currentPage + 1 : props.currentPage)}>Далее</button>
         </div>
     );
 }

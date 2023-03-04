@@ -9,7 +9,7 @@ function Table(){
     const [data, setData] = useState([]);
     const [value, setValue] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
-    const [dataPerPage] = useState(10);
+    const [dataPerPage, setDataPerPage] = useState(10);
 
     const lastIndex = currentPage * dataPerPage;
     const firstIndex = lastIndex - dataPerPage;
@@ -38,6 +38,7 @@ function Table(){
         }else if(el.body.toLowerCase().includes(value.toLowerCase())){
             return el.body
         }
+
     })
 
     const currentData = search.slice(firstIndex, lastIndex);
@@ -70,13 +71,14 @@ function Table(){
                     />
                 </tbody>
             </table>
-
             <Pagintaion
                 dataPerPage = {dataPerPage}
                 totalData = {data.length}
                 paginate = {paginate}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
+                value = {value}
+                searchData = {search.length}
             />
         </div>
 
