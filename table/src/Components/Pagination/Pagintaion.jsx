@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './PaginationStyle.css'
 function Pagintaion(props) {
 
@@ -16,7 +17,7 @@ function Pagintaion(props) {
             <ul className='pagintaion-number'>
                 {pageNumbers.map(number =>(
                     <li key={number}>
-                        <a className={`number ${props.currentPage == number ? 'active' : ''}`} href='#' onClick={()=>paginate(number)}>{number}</a>
+                        <Link className={`number ${props.currentPage == number ? 'active' : ''}`} to={`/page/${number}`} onClick={()=>paginate(number)}>{number}</Link>
                     </li>
                 ))
                 }
