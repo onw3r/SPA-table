@@ -13,16 +13,20 @@ function Pagintaion(props) {
     }
     return (
         <div className='pagintaion-row'>
-            <button className='page-toggle' onClick={()=>props.setCurrentPage(props.currentPage != 1 ? props.currentPage - 1 : props.currentPage)}>Назад</button>
+            <Link className='page-toggle'
+                to={`/${props.currentPage == 1 ? props.currentPage : props.currentPage - 1}`}
+                onClick={() => props.setCurrentPage(props.currentPage != 1 ? props.currentPage - 1 : props.currentPage)}>Назад</Link>
             <ul className='pagintaion-number'>
-                {pageNumbers.map(number =>(
+                {pageNumbers.map(number => (
                     <li key={number}>
-                        <Link className={`number ${props.currentPage == number ? 'active' : ''}`} to={`/page/${number}`} onClick={()=>paginate(number)}>{number}</Link>
+                        <Link className={`number ${props.currentPage == number ? 'active' : ''}`} to={`/${number}`} onClick={() => paginate(number)}>{number}</Link>
                     </li>
                 ))
                 }
             </ul>
-            <button className='page-toggle' onClick={()=>props.setCurrentPage(props.currentPage < totalNumbers ? props.currentPage + 1 : props.currentPage)}>Далее</button>
+            <Link className='page-toggle'
+                to={`/${props.currentPage == totalNumbers ? props.currentPage : props.currentPage + 1}`}
+                onClick={() => props.setCurrentPage(props.currentPage < totalNumbers ? props.currentPage + 1 : props.currentPage)}>Далее</Link>
         </div>
     );
 }

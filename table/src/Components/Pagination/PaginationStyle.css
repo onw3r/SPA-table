@@ -30,6 +30,7 @@ li{
     border: none;
     background: none;
     color:#474955;
+    text-decoration: none;
 }
 .page-toggle:hover{
     color:#7EBC3C;
